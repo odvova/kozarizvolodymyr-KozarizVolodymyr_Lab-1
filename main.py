@@ -5,7 +5,7 @@ clock = pygame.time.Clock()
 
 WINDOW_SIZE = width, heigth = 800, 600
 WHITE = (255, 255, 255)
-FPS = 30
+FPS = 60
 
 
 screen = pygame.display.set_mode(WINDOW_SIZE)
@@ -17,7 +17,6 @@ bg_music.play(-1)
 background_image = pygame.image.load(
     'Images/Backgrounds/GameProcessBackground.png')
 
-#Test1
 player_anim_count = 0
 player_x = 100
 player_y = 500
@@ -92,8 +91,15 @@ def game_pause() -> None:
 
 
 def game_time_display(time: float) -> None:
-    img = game_font.render(f'Time {time}', True, (233, 229, 0))
-    screen.blit(img, (20, 50))
+    if time >= 60:
+        minutes = int(time // 60)
+        seconds = int(time % 60)
+        img = game_font.render(
+            f'Time {minutes} : {seconds}', True, (233, 229, 0))
+        screen.blit(img, (20, 50))
+    else:
+        img = game_font.render(f'Time {time}', True, (233, 229, 0))
+        screen.blit(img, (20, 50))
 
 
 if __name__ == "__main__":
@@ -114,8 +120,8 @@ if __name__ == "__main__":
             game_start_time = game_now_time
             falling_objects.append(FallingObject(WINDOW_SIZE))
 
-            game_time_between_spawns -= 5  # Needs to be normalized
-            game_fall_speed += 0.005       # Needs to be normalized
+            # game_time_between_spawns -= 5  # Needs to be normalized
+            game_fall_speed += 0.05          # Needs to be normalized
 
         for obj in falling_objects:  # Updating object 'Y' coordinate
             obj.update_position(game_fall_speed)
