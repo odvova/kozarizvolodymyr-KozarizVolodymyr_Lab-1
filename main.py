@@ -4,11 +4,8 @@ pygame.init()
 clock = pygame.time.Clock()
 
 WINDOW_SIZE = width, heigth = 800, 600
-BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FPS = 30
-
-
 
 
 screen = pygame.display.set_mode(WINDOW_SIZE)
@@ -17,13 +14,16 @@ icon = pygame.image.load('Images/icon/sonic.png')
 pygame.display.set_icon(icon)
 bg_music = pygame.mixer.Sound('Music/sonic_music.mp3')
 bg_music.play(-1)
+background_image = pygame.image.load(
+    'Images/Backgrounds/GameProcessBackground.png')
 
-player_anim_count = 0 
-player_x = 100  
+
+player_anim_count = 0
+player_x = 100
 player_y = 500
 player_speed = 7
 bg_x = 0
-game_fall_speed = 6 # 0.5
+game_fall_speed = 6  # 0.5
 game_number_of_objs_per_spawn = 1
 game_time_between_spawns = 1000
 game_start_time = pygame.time.get_ticks()
@@ -54,13 +54,17 @@ walk_right = [
 
 
 def score_display(score: int) -> None:
-    font = pygame.font.SysFont(None, 24)
+    font = pygame.font.Font('Images/Backgrounds/RetroGamingFont.ttf', 24)
     img = font.render(f'Score {game_score}', True, WHITE)
-    screen.blit(img, (20, 20))
+    screen.blit(img, (350, 20))
 
 
 if __name__ == "__main__":
     while True:
+        # Setting background image
+        background_image = pygame.transform.scale(background_image, (800, 600))
+        screen.blit(background_image, (0, 0))
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -76,7 +80,6 @@ if __name__ == "__main__":
 
         for obj in falling_objects:  # Updating object 'Y' coordinate
             obj.update_position(game_fall_speed)
-        screen.fill((0, 0, 0))
 
         for obj in falling_objects:
             obj.spawn_obj(screen, WHITE)  # Draw object
@@ -84,17 +87,14 @@ if __name__ == "__main__":
             if obj.y > 600:  # Check if object already crashed
                 falling_objects.remove(obj)
                 game_score += 5
-                print(game_score)
 
-        # screen.fill((0, 0, 0))
-    
-        keys = pygame.key.get_pressed() # модуль key
+        keys = pygame.key.get_pressed()  # модуль key
         if keys[pygame.K_LEFT]:
-            screen.blit(walk_left[player_anim_count], (player_x,player_y))
+            screen.blit(walk_left[player_anim_count], (player_x, player_y))
         elif keys[pygame.K_RIGHT]:
-            screen.blit(walk_right[player_anim_count],(player_x,player_y))
+            screen.blit(walk_right[player_anim_count], (player_x, player_y))
         else:
-            screen.blit(walk_right[0], (player_x,player_y)) 
+            screen.blit(walk_right[0], (player_x, player_y))
 
         # Збільшення лічильника кадрів
         player_anim_count += 1
@@ -108,7 +108,6 @@ if __name__ == "__main__":
             # Оновлення екрану
             pygame.display.flip()
 
-    
-        clock.tick(FPS)           
+        clock.tick(FPS)
         score_display(game_score)
         pygame.display.update()
