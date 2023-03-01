@@ -28,6 +28,7 @@ game_number_of_objs_per_spawn = 1
 game_time_between_spawns = 1000
 game_start_time = pygame.time.get_ticks()
 game_score = 0
+game_font = pygame.font.Font('Images/Backgrounds/RetroGamingFont.ttf', 24)
 falling_objects = []
 walk_left = [
     pygame.image.load('Images/hero_left/sonic1_l.png'),
@@ -54,9 +55,45 @@ walk_right = [
 
 
 def score_display(score: int) -> None:
-    font = pygame.font.Font('Images/Backgrounds/RetroGamingFont.ttf', 24)
-    img = font.render(f'Score {game_score}', True, WHITE)
-    screen.blit(img, (350, 20))
+    img = game_font.render(f'Score {game_score}', True, (233, 229, 0))
+    screen.blit(img, (20, 20))
+
+
+def game_pause() -> None:
+    game_pause = True
+    bg_music.stop()
+
+    while game_pause:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_c:
+                    game_pause = False
+                    bg_music.play()
+
+                elif event.key == pygame.K_q:
+                    pygame.quit()
+                    quit()
+
+        img_pause = game_font.render('Pause | |', True, (233, 229, 0))
+        img_c = game_font.render('c - countinue', True, (233, 229, 0))
+        img_q = game_font.render('q - quit game', True, (233, 229, 0))
+        screen.blit(
+            img_pause, ((WINDOW_SIZE[0]/2) - 50, (WINDOW_SIZE[1]/2) - 50))
+        screen.blit(
+            img_c, ((WINDOW_SIZE[0]/2) - 90, (WINDOW_SIZE[1]/2) - 20))
+        screen.blit(
+            img_q, ((WINDOW_SIZE[0]/2) - 90, WINDOW_SIZE[1]/2))
+
+        pygame.display.update()
+        clock.tick(5)
+
+
+def game_time_display(time: float) -> None:
+    img = game_font.render(f'Time {time}', True, (233, 229, 0))
+    screen.blit(img, (20, 50))
 
 
 if __name__ == "__main__":
@@ -70,6 +107,8 @@ if __name__ == "__main__":
                 pygame.quit()
 
         game_now_time = pygame.time.get_ticks()
+        game_time_display(game_now_time/1000)
+        score_display(game_score)
 
         if game_now_time - game_start_time > game_time_between_spawns:
             game_start_time = game_now_time
@@ -95,6 +134,8 @@ if __name__ == "__main__":
             screen.blit(walk_right[player_anim_count], (player_x, player_y))
         else:
             screen.blit(walk_right[0], (player_x, player_y))
+        if keys[pygame.K_ESCAPE]:
+            game_pause()
 
         # Збільшення лічильника кадрів
         player_anim_count += 1
@@ -109,5 +150,4 @@ if __name__ == "__main__":
             pygame.display.flip()
 
         clock.tick(FPS)
-        score_display(game_score)
         pygame.display.update()
