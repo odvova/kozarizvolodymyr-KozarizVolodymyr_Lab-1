@@ -11,7 +11,7 @@ Chosen **game idea**:<br />
 
 - Volodymyr: Start screen, damage to character.
 - Yurii: Character movement, character animation.
-- Oleh: Falling objects algorithm, game score, game landscape. 
+- Oleh: Falling objects and algorithm to them, game score algorithm and display it, display of time and formatting of it, game pause on `Esc`, game background image. 
 
 ## Tech
 
