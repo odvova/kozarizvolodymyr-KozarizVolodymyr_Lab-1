@@ -12,14 +12,18 @@ FPS = 30
 
 
 screen = pygame.display.set_mode(WINDOW_SIZE)
-
+pygame.display.set_caption("DodgeBall Game")
+icon = pygame.image.load('Images/icon/sonic.png')
+pygame.display.set_icon(icon)
+bg_music = pygame.mixer.Sound('Music/sonic_music.mp3')
+bg_music.play(-1)
 
 player_anim_count = 0 
 player_x = 100  
 player_y = 500
-player_speed = 5
+player_speed = 7
 bg_x = 0
-game_fall_speed = 0.25
+game_fall_speed = 6 # 0.5
 game_number_of_objs_per_spawn = 1
 game_time_between_spawns = 1000
 game_start_time = pygame.time.get_ticks()
@@ -104,7 +108,7 @@ if __name__ == "__main__":
             # Оновлення екрану
             pygame.display.flip()
 
-
+    
         clock.tick(FPS)           
         score_display(game_score)
         pygame.display.update()
