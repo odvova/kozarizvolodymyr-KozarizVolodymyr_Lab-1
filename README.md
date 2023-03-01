@@ -9,7 +9,7 @@ Chosen **game idea**:<br />
 
 ## Decomposition of tasks
 
-- Volodymyr: Start screen, damage to character.
+- Volodymyr: Death screen, damage to character.
 - Yurii: Character movement, character animation, adding music and logo.
 - Oleh: Falling objects and algorithm to them, game score algorithm and display it, display of time and formatting of it, game pause on `Esc`, game background image. 
 
