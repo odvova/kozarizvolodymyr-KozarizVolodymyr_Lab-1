@@ -20,9 +20,8 @@ background_image = pygame.image.load(
     'Images/Backgrounds/GameProcessBackground.png')
 
 player_anim_count = 0
-player_x = 100
+player_x = 55
 player_y = 500
-player_rect = pygame.Rect(player_x, player_y, 100, 70)  # adjust size as needed
 player_speed = 7
 bg_x = 0
 game_fall_speed = 6  # 0.5
@@ -54,6 +53,8 @@ walk_right = [
     pygame.image.load('Images/hero_right/sonic8_r.png'),
     pygame.image.load('Images/hero_right/sonic9_r.png'),
 ]
+
+player_hitbox = pygame.Rect(player_x, player_y, 40, 60)  # define player's hitbox
 
 
 def score_display(score: int) -> None:
@@ -131,7 +132,7 @@ if __name__ == "__main__":
 
         for obj in falling_objects:
             obj_rect = obj.spawn_obj(screen, WHITE)  # Draw object
-            if obj_rect.colliderect(player_rect):  # Check for collision with player
+            if player_hitbox.colliderect(pygame.Rect(obj.x, obj.y, 20, 20)):  # Check for collision with player
                 death_menu = DeathMenu(screen)
                 death_menu.run()
                 game_score = 0
@@ -161,8 +162,10 @@ if __name__ == "__main__":
 
         if keys[pygame.K_LEFT] and player_x > 15:
             player_x -= player_speed
+            player_hitbox.x = player_x  # update hitbox x coordinate
         elif keys[pygame.K_RIGHT] and player_x < 740:
             player_x += player_speed
+            player_hitbox.x = player_x
             # Оновлення екрану
             pygame.display.flip()
 
