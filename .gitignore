@@ -1,1 +1,6 @@
 __pycache__
+pyvenv.cfg
+requirements.txt
+setup.py
+tests
+tox.ini

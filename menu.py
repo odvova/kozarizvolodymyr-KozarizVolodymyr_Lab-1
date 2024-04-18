@@ -1,7 +1,7 @@
 import sys
 import pygame
 
-WHITE = (233, 229, 0)
+WHITE = (255, 255, 255)
 
 
 class DeathMenu:
