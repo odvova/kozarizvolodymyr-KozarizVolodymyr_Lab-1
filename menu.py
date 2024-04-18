@@ -5,6 +5,27 @@ WHITE = (233, 229, 0)
 
 
 class DeathMenu:
+    """
+    A class to represent the death menu.
+
+    Attributes
+    ----------
+    surface : pygame.Surface
+        The surface to draw the death menu on.
+    width : int
+        The width of the surface.
+    height : int
+        The height of the surface.
+    font : pygame.font.Font
+        The font used to render the text.
+    menu_font : pygame.font.Font
+        The font used to render the menu text.
+
+    Methods
+    -------
+    run()
+        Run the death menu.
+    """
     def __init__(self, surface) -> None:
         self.surface = surface
         self.width, self.height = pygame.display.get_surface().get_size()
